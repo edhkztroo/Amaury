@@ -20,7 +20,7 @@ const Biography: React.FC = () => {
                 <div className="absolute inset-0 bg-brand-navy overflow-hidden grayscale hover:grayscale-0 transition-all duration-700 ease-out">
                    {/* Placeholder for portrait */}
                    <img 
-                    src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=2070&auto=format&fit=crop"
+                    src="/bio.jpg"
                     alt="Amaury Mogollón Portrait"
                     className="w-full h-full object-cover"
                    />
