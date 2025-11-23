@@ -125,27 +125,26 @@ const Contact: React.FC = () => {
           <div className="flex gap-8 mt-4 md:mt-0">
             <a href="#" className="hover:text-brand-navy transition-colors">Aviso Legal</a>
             <a href="#" className="hover:text-brand-navy transition-colors">Privacidad</a>
-    {/* INICIO DEL CÓDIGO CORREGIDO PARA REACT */}
+    {/* CÓDIGO ACTUALIZADO: FONDO BLANCO + AZUL */}
       <style>{`
         .vibe-credit {
           text-decoration: none;
-          color: #ffffff;
+          color: #000000; /* AHORA ES NEGRO */
           font-size: 14px;
           display: inline-flex;
           align-items: center;
           gap: 6px;
+          font-family: sans-serif; /* Fuente normal y limpia */
           transition: color 0.3s ease;
           cursor: pointer;
         }
 
         .vibe-credit:hover {
-          color: #CCFF00; /* Tu Verde Ácido */
+          color: #4657F0; /* AHORA ES AZUL ELÉCTRICO AL PASAR EL MOUSE */
         }
 
-        .vibe-serif {
-          font-family: "Times New Roman", serif;
-          font-style: italic;
-          font-weight: 400;
+        .vibe-normal {
+          font-weight: 500; /* Peso normal */
         }
 
         .vibe-star {
@@ -159,19 +158,18 @@ const Contact: React.FC = () => {
         }
 
         .vibe-brand {
-          font-family: sans-serif;
-          font-weight: 800;
+          font-weight: 900; /* Negrita muy gruesa */
+          text-transform: uppercase;
           letter-spacing: 0.5px;
         }
       `}</style>
 
-      <a href="#" className="vibe-credit">
-        <span className="vibe-serif">Look & Feel</span>
+      <a href="https://instagram.com/thatvibestudio" target="_blank" rel="noopener noreferrer" className="vibe-credit">
+        <span className="vibe-normal">Look & Feel</span>
         <span className="vibe-star">✦</span>
         <span className="vibe-brand">THAT VIBE STUDIO</span>
       </a>
-      {/* FIN DEL CÓDIGO CORREGIDO */}
-
+      {/* FIN DEL CÓDIGO */}
           </div>
         </div>
 
