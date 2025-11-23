@@ -130,7 +130,7 @@ const Contact: React.FC = () => {
         .vibe-credit {
           text-decoration: none;
           color: #000000; /* AHORA ES NEGRO */
-          font-size: 14px;
+          font-size: 12px;
           display: inline-flex;
           align-items: center;
           gap: 6px;
@@ -140,7 +140,7 @@ const Contact: React.FC = () => {
         }
 
         .vibe-credit:hover {
-          color: #4657F0; /* AHORA ES AZUL ELÉCTRICO AL PASAR EL MOUSE */
+          color: #6831fc; /* AHORA ES AZUL ELÉCTRICO AL PASAR EL MOUSE */
         }
 
         .vibe-normal {
@@ -164,7 +164,7 @@ const Contact: React.FC = () => {
         }
       `}</style>
 
-      <a href="https://instagram.com/thatvibestudio" target="_blank" rel="noopener noreferrer" className="vibe-credit">
+      <a href="https://instagram.com/somosthatvibe" target="_blank" rel="noopener noreferrer" className="vibe-credit">
         <span className="vibe-normal">Look & Feel</span>
         <span className="vibe-star">✦</span>
         <span className="vibe-brand">THAT VIBE STUDIO</span>
