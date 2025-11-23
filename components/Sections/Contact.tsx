@@ -125,55 +125,52 @@ const Contact: React.FC = () => {
           <div className="flex gap-8 mt-4 md:mt-0">
             <a href="#" className="hover:text-brand-navy transition-colors">Aviso Legal</a>
             <a href="#" className="hover:text-brand-navy transition-colors">Privacidad</a>
-            <style>
-  .vibe-credit {
-    text-decoration: none;
-    color: #ffffff; /* Color normal (Blanco) */
-    font-size: 14px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: color 0.3s ease;
-    cursor: pointer;
-  }
+    {/* INICIO DEL CÓDIGO CORREGIDO PARA REACT */}
+      <style>{`
+        .vibe-credit {
+          text-decoration: none;
+          color: #ffffff;
+          font-size: 14px;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          transition: color 0.3s ease;
+          cursor: pointer;
+        }
 
-  /* El cambio de color al pasar el mouse */
-  .vibe-credit:hover {
-    color: #CCFF00; /* Tu Verde Ácido */
-  }
+        .vibe-credit:hover {
+          color: #CCFF00; /* Tu Verde Ácido */
+        }
 
-  /* Estilo para "Look & Feel" (Cursiva elegante) */
-  .vibe-serif {
-    font-family: "Times New Roman", serif; /* O usa tu fuente serif */
-    font-style: italic;
-    font-weight: 400;
-  }
+        .vibe-serif {
+          font-family: "Times New Roman", serif;
+          font-style: italic;
+          font-weight: 400;
+        }
 
-  /* Estilo para la estrella */
-  .vibe-star {
-    font-size: 16px;
-    display: inline-block;
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
+        .vibe-star {
+          font-size: 16px;
+          display: inline-block;
+          transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
 
-  /* La estrella gira al hacer hover */
-  .vibe-credit:hover .vibe-star {
-    transform: rotate(180deg);
-  }
+        .vibe-credit:hover .vibe-star {
+          transform: rotate(180deg);
+        }
 
-  /* Estilo para "That Vibe Studio" (Gruesa) */
-  .vibe-brand {
-    font-family: sans-serif; /* O usa tu fuente sans */
-    font-weight: 800; /* Extra Bold */
-    letter-spacing: 0.5px;
-  }
-</style>
+        .vibe-brand {
+          font-family: sans-serif;
+          font-weight: 800;
+          letter-spacing: 0.5px;
+        }
+      `}</style>
 
-<a href="#" class="vibe-credit">
-  <span class="vibe-serif">Look & Feel</span>
-  <span class="vibe-star">✦</span>
-  <span class="vibe-brand">THAT VIBE STUDIO</span>
-</a>
+      <a href="#" className="vibe-credit">
+        <span className="vibe-serif">Look & Feel</span>
+        <span className="vibe-star">✦</span>
+        <span className="vibe-brand">THAT VIBE STUDIO</span>
+      </a>
+      {/* FIN DEL CÓDIGO CORREGIDO */}
 
           </div>
         </div>
