@@ -163,7 +163,7 @@ const Contact: React.FC = () => {
         }
       `}</style>
 
-      <a href="https://instagram.com/somosthatvibe" target="_blank" rel="noopener noreferrer" className="vibe-credit">
+      <a href="https://www.thatvibe.co/" target="_blank" rel="noopener noreferrer" className="vibe-credit">
         <span className="vibe-normal">Look & Feel</span>
         <span className="vibe-star">✦</span>
         <span className="vibe-brand">THAT VIBE STUDIO</span>
