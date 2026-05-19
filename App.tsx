@@ -10,7 +10,8 @@ import Consulting from './components/Sections/Consulting';
 import Film from './components/Sections/Film';
 import Contact from './components/Sections/Contact';
 import { ARTICLES } from './constants';
-import { AppRoute, SectionId } from './types';
+import { fetchSanityArticles, hasSanityConfig } from './lib/sanity';
+import { AppRoute, Article, SectionId } from './types';
 
 const getHash = () => window.location.hash;
 
@@ -55,6 +56,7 @@ const scrollToSection = (sectionId: string) => {
 
 function App() {
   const [currentHash, setCurrentHash] = useState(getHash);
+  const [articles, setArticles] = useState<Article[]>(ARTICLES);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -67,6 +69,28 @@ function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
+  useEffect(() => {
+    if (!hasSanityConfig) {
+      return;
+    }
+
+    let cancelled = false;
+
+    fetchSanityArticles()
+      .then((items) => {
+        if (!cancelled && items.length > 0) {
+          setArticles(items);
+        }
+      })
+      .catch((error) => {
+        console.error('Error loading Sanity articles:', error);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const currentRoute = useMemo(() => getRouteFromHash(currentHash), [currentHash]);
   const currentArticle = useMemo(() => {
     const slug = getArticleSlugFromHash(currentHash);
@@ -75,8 +99,8 @@ function App() {
       return null;
     }
 
-    return ARTICLES.find((article) => article.slug === slug) ?? null;
-  }, [currentHash]);
+    return articles.find((article) => article.slug === slug) ?? null;
+  }, [articles, currentHash]);
 
   useEffect(() => {
     if (!currentHash || currentHash.startsWith('#/')) {
@@ -109,7 +133,7 @@ function App() {
         </>
       ) : currentRoute === 'articles' ? (
         <>
-          <Articles />
+          <Articles articles={articles} />
           <Contact />
         </>
       ) : (

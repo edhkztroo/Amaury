@@ -1,0 +1,19 @@
+{
+  "name": "amaury-sanity-studio",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node ./node_modules/sanity/bin/sanity dev",
+    "start": "node ./node_modules/sanity/bin/sanity dev",
+    "build": "node ./node_modules/sanity/bin/sanity build",
+    "deploy": "node ./node_modules/sanity/bin/sanity deploy"
+  },
+  "dependencies": {
+    "@sanity/vision": "^5.25.1",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "sanity": "^5.25.1",
+    "styled-components": "^6.4.1"
+  }
+}

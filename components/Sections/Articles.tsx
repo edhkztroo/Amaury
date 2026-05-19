@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowLeft, ArrowUpRight, Newspaper } from 'lucide-react';
 import { Reveal } from '../UI/Reveal';
-import { ARTICLES, SectionId } from '../../constants';
+import { SectionId } from '../../constants';
 import { Article } from '../../types';
 
 const ArticleCover: React.FC<{ article: Article; compact?: boolean }> = ({ article, compact = false }) => {
@@ -30,9 +30,13 @@ const ArticleCover: React.FC<{ article: Article; compact?: boolean }> = ({ artic
   );
 };
 
-const Articles: React.FC = () => {
-  const featuredArticle = ARTICLES.find((article) => article.featured) ?? ARTICLES[0];
-  const secondaryArticles = ARTICLES.filter((article) => article.id !== featuredArticle?.id);
+interface ArticlesProps {
+  articles: Article[];
+}
+
+const Articles: React.FC<ArticlesProps> = ({ articles }) => {
+  const featuredArticle = articles.find((article) => article.featured) ?? articles[0];
+  const secondaryArticles = articles.filter((article) => article.id !== featuredArticle?.id);
 
   return (
     <section id={SectionId.ARTICLES} className="min-h-screen pt-36 pb-24 md:pt-44 md:pb-32 bg-white relative overflow-hidden">
