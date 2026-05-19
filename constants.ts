@@ -1,6 +1,8 @@
-import { Award, Book, SectionId } from './types';
+import { Article, Award, Book, SectionId } from './types';
 
 export { SectionId };
+
+export const ARTICLES_ROUTE = '#/articulos';
 
 export const BRAND_NAME = "AMAURY MOGOLLÓN";
 export const BRAND_ROLE = "Consultor Político";
@@ -15,6 +17,7 @@ export const NAV_ITEMS = [
   { label: "Biografía", href: `#${SectionId.BIO}` },
   { label: "Premios", href: `#${SectionId.AWARDS}` },
   { label: "Libros", href: `#${SectionId.BOOKS}` },
+  { label: "Artículos", href: ARTICLES_ROUTE },
   { label: "Consultoría", href: `#${SectionId.CONSULTING}` },
   { label: "Cine", href: `#${SectionId.FILM}` },
   { label: "Contacto", href: `#${SectionId.CONTACT}` },
@@ -76,6 +79,37 @@ export const BOOKS: Book[] = [
     description: 'Un recorrido histórico y político por los movimientos de izquierda en la región.',
     coverImage: '/cover-izquierda.png'
   }
+];
+
+export const ARTICLES: Article[] = [
+  {
+    id: '1',
+    title: 'Cómo construir una narrativa política que conecte con el votante joven',
+    category: 'Estrategia',
+    date: 'Mayo 2026',
+    readTime: '5 min',
+    excerpt: 'Una mirada práctica a los códigos culturales, emociones y formatos que hoy convierten interés en movilización política real.',
+    href: '#',
+    featured: true,
+  },
+  {
+    id: '2',
+    title: 'Campañas territoriales: lo digital funciona mejor cuando nace del territorio',
+    category: 'Campañas',
+    date: 'Abril 2026',
+    readTime: '4 min',
+    excerpt: 'Ideas para alinear estructura de calle, liderazgo local y contenido digital sin perder autenticidad ni dirección estratégica.',
+    href: '#',
+  },
+  {
+    id: '3',
+    title: 'Comunicación de gobierno en tiempos de atención fragmentada',
+    category: 'Gobierno',
+    date: 'Marzo 2026',
+    readTime: '6 min',
+    excerpt: 'Claves para explicar gestión pública con claridad, ritmo y sentido ciudadano en un entorno dominado por la inmediatez.',
+    href: '#',
+  },
 ];
 
 export const TEXT_CONTENT = {

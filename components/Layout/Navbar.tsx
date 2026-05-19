@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import { NAV_ITEMS, SectionId } from '../../constants';
+import { ARTICLES_ROUTE, NAV_ITEMS, SectionId } from '../../constants';
+import { AppRoute } from '../../types';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  currentRoute: AppRoute;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ currentRoute }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -14,23 +19,45 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const smoothScrollToSection = (targetId: string) => {
+    const element = document.getElementById(targetId);
+
+    if (!element) {
+      return false;
+    }
+
+    const headerOffset = 100;
+    const elementPosition = element.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
+
+    return true;
+  };
+
   const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
 
-    const targetId = href.replace('#', '');
-    const element = document.getElementById(targetId);
-
-    if (element) {
-      const headerOffset = 100; // Adjust this value to match your header height + desired padding
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
+    if (href.startsWith('#/')) {
+      window.location.hash = href;
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      return;
     }
+
+    const targetId = href.replace('#', '');
+
+    if (currentRoute === 'home' && smoothScrollToSection(targetId)) {
+      if (window.location.hash !== href) {
+        window.history.replaceState(null, '', href);
+      }
+      return;
+    }
+
+    window.location.hash = href;
   };
 
   return (
@@ -71,10 +98,18 @@ const Navbar: React.FC = () => {
               key={item.label} 
               href={item.href}
               onClick={(e) => handleNavigation(e, item.href)}
-              className="text-sm uppercase tracking-widest font-medium text-gray-300 hover:text-brand-red transition-colors relative group cursor-pointer"
+              className={`text-sm uppercase tracking-widest font-medium transition-colors relative group cursor-pointer ${
+                item.href === ARTICLES_ROUTE && currentRoute === 'articles'
+                  ? 'text-brand-red'
+                  : 'text-gray-300 hover:text-brand-red'
+              }`}
             >
               {item.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-red transition-all duration-300 group-hover:w-full"></span>
+              <span className={`absolute -bottom-1 left-0 h-0.5 bg-brand-red transition-all duration-300 ${
+                item.href === ARTICLES_ROUTE && currentRoute === 'articles'
+                  ? 'w-full'
+                  : 'w-0 group-hover:w-full'
+              }`}></span>
             </a>
           ))}
           <a 
@@ -101,7 +136,11 @@ const Navbar: React.FC = () => {
               key={item.label} 
               href={item.href}
               onClick={(e) => handleNavigation(e, item.href)}
-              className="text-3xl font-serif font-bold text-white hover:text-brand-red transition-colors cursor-pointer"
+              className={`text-3xl font-serif font-bold transition-colors cursor-pointer ${
+                item.href === ARTICLES_ROUTE && currentRoute === 'articles'
+                  ? 'text-brand-red'
+                  : 'text-white hover:text-brand-red'
+              }`}
               style={{ transitionDelay: `${idx * 50}ms` }}
             >
               {item.label}
