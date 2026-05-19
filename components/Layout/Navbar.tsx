@@ -10,6 +10,8 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ currentRoute }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const isArticlesRoute = currentRoute === 'articles';
+  const showSolidNavbar = scrolled || isArticlesRoute;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,8 +65,10 @@ const Navbar: React.FC<NavbarProps> = ({ currentRoute }) => {
   return (
     <nav 
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-        scrolled 
-          ? 'py-4 bg-brand-navy/90 backdrop-blur-lg border-b border-white/5 shadow-2xl' 
+        showSolidNavbar
+          ? isArticlesRoute
+            ? 'py-4 bg-white/95 backdrop-blur-lg border-b border-brand-navy/10 shadow-lg'
+            : 'py-4 bg-brand-navy/90 backdrop-blur-lg border-b border-white/5 shadow-2xl'
           : 'py-8 bg-transparent'
       }`}
     >
@@ -78,7 +82,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentRoute }) => {
           <img 
             src="/logo.svg" 
             alt="Amaury Mogollón" 
-            className="h-9 w-auto md:h-10"
+            className={`h-9 w-auto md:h-10 ${isArticlesRoute ? 'brightness-0' : ''}`}
             onError={(e) => {
               // Fallback if image not found
               e.currentTarget.style.display = 'none';
@@ -86,7 +90,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentRoute }) => {
             }}
           />
           {/* Fallback Text hidden by default */}
-          <span className="hidden text-2xl font-serif font-bold text-white tracking-tight">
+          <span className={`hidden text-2xl font-serif font-bold tracking-tight ${isArticlesRoute ? 'text-brand-navy' : 'text-white'}`}>
             AMAURY MOGOLLÓN<span className="text-brand-red">.</span>
           </span>
         </a>
@@ -101,7 +105,9 @@ const Navbar: React.FC<NavbarProps> = ({ currentRoute }) => {
               className={`text-sm uppercase tracking-widest font-medium transition-colors relative group cursor-pointer ${
                 item.href === ARTICLES_ROUTE && currentRoute === 'articles'
                   ? 'text-brand-red'
-                  : 'text-gray-300 hover:text-brand-red'
+                  : isArticlesRoute
+                    ? 'text-brand-navy/65 hover:text-brand-red'
+                    : 'text-gray-300 hover:text-brand-red'
               }`}
             >
               {item.label}
@@ -123,7 +129,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentRoute }) => {
 
         {/* Mobile Toggle */}
         <button 
-          className="md:hidden text-white z-50"
+          className={`md:hidden z-50 ${isArticlesRoute ? 'text-brand-navy' : 'text-white'}`}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X size={32} /> : <Menu size={32} />}
