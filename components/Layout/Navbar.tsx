@@ -10,8 +10,8 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ currentRoute }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const isArticlesRoute = currentRoute === 'articles';
-  const showSolidNavbar = scrolled || isArticlesRoute;
+  const isInternalArticlesRoute = currentRoute === 'articles' || currentRoute === 'article-detail';
+  const showSolidNavbar = scrolled || isInternalArticlesRoute;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -66,8 +66,8 @@ const Navbar: React.FC<NavbarProps> = ({ currentRoute }) => {
     <nav 
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         showSolidNavbar
-          ? isArticlesRoute
-            ? 'py-4 bg-white/95 backdrop-blur-lg border-b border-brand-navy/10 shadow-lg'
+          ? isInternalArticlesRoute
+            ? 'py-4 bg-brand-navy/95 backdrop-blur-lg border-b border-white/10 shadow-lg'
             : 'py-4 bg-brand-navy/90 backdrop-blur-lg border-b border-white/5 shadow-2xl'
           : 'py-8 bg-transparent'
       }`}
@@ -82,7 +82,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentRoute }) => {
           <img 
             src="/logo.svg" 
             alt="Amaury Mogollón" 
-            className={`h-9 w-auto md:h-10 ${isArticlesRoute ? 'brightness-0' : ''}`}
+            className={`h-9 w-auto md:h-10 ${isInternalArticlesRoute ? 'brightness-[6]' : ''}`}
             onError={(e) => {
               // Fallback if image not found
               e.currentTarget.style.display = 'none';
@@ -90,7 +90,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentRoute }) => {
             }}
           />
           {/* Fallback Text hidden by default */}
-          <span className={`hidden text-2xl font-serif font-bold tracking-tight ${isArticlesRoute ? 'text-brand-navy' : 'text-white'}`}>
+          <span className={`hidden text-2xl font-serif font-bold tracking-tight ${isInternalArticlesRoute ? 'text-white' : 'text-white'}`}>
             AMAURY MOGOLLÓN<span className="text-brand-red">.</span>
           </span>
         </a>
@@ -103,16 +103,16 @@ const Navbar: React.FC<NavbarProps> = ({ currentRoute }) => {
               href={item.href}
               onClick={(e) => handleNavigation(e, item.href)}
               className={`text-sm uppercase tracking-widest font-medium transition-colors relative group cursor-pointer ${
-                item.href === ARTICLES_ROUTE && currentRoute === 'articles'
+                item.href === ARTICLES_ROUTE && isInternalArticlesRoute
                   ? 'text-brand-red'
-                  : isArticlesRoute
-                    ? 'text-brand-navy/65 hover:text-brand-red'
+                  : isInternalArticlesRoute
+                    ? 'text-white/75 hover:text-brand-red'
                     : 'text-gray-300 hover:text-brand-red'
               }`}
             >
               {item.label}
               <span className={`absolute -bottom-1 left-0 h-0.5 bg-brand-red transition-all duration-300 ${
-                item.href === ARTICLES_ROUTE && currentRoute === 'articles'
+                item.href === ARTICLES_ROUTE && isInternalArticlesRoute
                   ? 'w-full'
                   : 'w-0 group-hover:w-full'
               }`}></span>
@@ -129,7 +129,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentRoute }) => {
 
         {/* Mobile Toggle */}
         <button 
-          className={`md:hidden z-50 ${isArticlesRoute ? 'text-brand-navy' : 'text-white'}`}
+          className={`md:hidden z-50 ${isInternalArticlesRoute ? 'text-white' : 'text-white'}`}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X size={32} /> : <Menu size={32} />}
@@ -143,7 +143,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentRoute }) => {
               href={item.href}
               onClick={(e) => handleNavigation(e, item.href)}
               className={`text-3xl font-serif font-bold transition-colors cursor-pointer ${
-                item.href === ARTICLES_ROUTE && currentRoute === 'articles'
+                item.href === ARTICLES_ROUTE && isInternalArticlesRoute
                   ? 'text-brand-red'
                   : 'text-white hover:text-brand-red'
               }`}
