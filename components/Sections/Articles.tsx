@@ -80,10 +80,10 @@ const Articles: React.FC<ArticlesProps> = ({ articles }) => {
                 Próximamente
               </p>
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-brand-navy mb-4">
-                Los artículos aparecerán aquí.
+                Nuevos artículos en preparación.
               </h2>
               <p className="max-w-2xl text-lg text-gray-600 leading-relaxed">
-                Esta sección ya está conectada con Sanity. En cuanto publiques el primer artículo desde el panel editorial, se mostrará automáticamente aquí.
+                Muy pronto encontrarás en esta sección análisis, reflexiones y publicaciones sobre estrategia política, liderazgo y comunicación pública.
               </p>
             </div>
           </Reveal>
