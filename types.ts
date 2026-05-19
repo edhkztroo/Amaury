@@ -17,13 +17,16 @@ export interface Book {
 
 export interface Article {
   id: string;
+  slug: string;
   title: string;
   category: string;
   date: string;
   excerpt: string;
   readTime: string;
+  coverImage?: string;
   href?: string;
   featured?: boolean;
+  content?: string[];
 }
 
 export interface NavItem {
@@ -31,7 +34,7 @@ export interface NavItem {
   href: string;
 }
 
-export type AppRoute = 'home' | 'articles';
+export type AppRoute = 'home' | 'articles' | 'article-detail';
 
 export enum SectionId {
   HERO = 'home',

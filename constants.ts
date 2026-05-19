@@ -3,6 +3,7 @@ import { Article, Award, Book, SectionId } from './types';
 export { SectionId };
 
 export const ARTICLES_ROUTE = '#/articulos';
+export const getArticleRoute = (slug: string) => `#/articulos/${slug}`;
 
 export const BRAND_NAME = "AMAURY MOGOLLÓN";
 export const BRAND_ROLE = "Consultor Político";
@@ -84,31 +85,55 @@ export const BOOKS: Book[] = [
 export const ARTICLES: Article[] = [
   {
     id: '1',
+    slug: 'narrativa-politica-votante-joven',
     title: 'Cómo construir una narrativa política que conecte con el votante joven',
     category: 'Estrategia',
     date: 'Mayo 2026',
     readTime: '5 min',
     excerpt: 'Una mirada práctica a los códigos culturales, emociones y formatos que hoy convierten interés en movilización política real.',
-    href: '#',
+    coverImage: '/amaury-hero.png',
+    href: getArticleRoute('narrativa-politica-votante-joven'),
     featured: true,
+    content: [
+      'La conversación política con audiencias jóvenes ya no se gana con solemnidad ni con discursos cerrados. Se gana entendiendo sus códigos culturales, sus preocupaciones materiales y la forma en que construyen confianza en entornos saturados de estímulos.',
+      'Una narrativa eficaz no empieza diciendo qué quiere el candidato decir. Empieza descubriendo qué tensión vive hoy ese votante: incertidumbre, falta de representación, precariedad, deseo de movilidad o cansancio frente al lenguaje político tradicional.',
+      'Cuando esa tensión está clara, el mensaje debe simplificarse sin volverse superficial. La claridad emocional, la consistencia estética y la repetición inteligente son más poderosas que el exceso de promesas o tecnicismos.',
+      'La narrativa también necesita prueba social. Testimonios, escenas cotidianas, voceros creíbles y formatos nativos para cada plataforma ayudan a que el mensaje parezca parte de la conversación y no una interrupción publicitaria.',
+    ],
   },
   {
     id: '2',
+    slug: 'campanas-territoriales-digital',
     title: 'Campañas territoriales: lo digital funciona mejor cuando nace del territorio',
     category: 'Campañas',
     date: 'Abril 2026',
     readTime: '4 min',
     excerpt: 'Ideas para alinear estructura de calle, liderazgo local y contenido digital sin perder autenticidad ni dirección estratégica.',
-    href: '#',
+    coverImage: '/bio.jpg',
+    href: getArticleRoute('campanas-territoriales-digital'),
+    content: [
+      'Muchas campañas separan artificialmente el territorio y lo digital. El resultado suele ser una operación desalineada: la calle dice una cosa, las redes dicen otra y el electorado percibe una marca política poco orgánica.',
+      'Lo digital funciona mejor cuando documenta, amplifica y ordena lo que realmente ocurre en el territorio. Esa lógica convierte cada recorrido, reunión, activación o conversación ciudadana en insumo narrativo con valor político.',
+      'Para lograrlo, hace falta una estructura simple: mensajes prioritarios, responsables claros por zona, captura constante de contenido y criterio editorial para transformar actividad territorial en piezas útiles para cada canal.',
+      'La autenticidad no aparece por accidente. Se diseña cuando el equipo entiende que la mejor comunicación no siempre es la más producida, sino la que transmite presencia, escucha y capacidad real de organización.',
+    ],
   },
   {
     id: '3',
+    slug: 'comunicacion-gobierno-atencion-fragmentada',
     title: 'Comunicación de gobierno en tiempos de atención fragmentada',
     category: 'Gobierno',
     date: 'Marzo 2026',
     readTime: '6 min',
     excerpt: 'Claves para explicar gestión pública con claridad, ritmo y sentido ciudadano en un entorno dominado por la inmediatez.',
-    href: '#',
+    coverImage: '/amaury-hero.png',
+    href: getArticleRoute('comunicacion-gobierno-atencion-fragmentada'),
+    content: [
+      'Gobernar y comunicar no son tareas separadas. En contextos de atención fragmentada, la gestión que no se explica con claridad pierde valor político incluso cuando produce resultados concretos.',
+      'La ciudadanía no procesa informes extensos ni cronologías administrativas. Procesa señales simples: qué cambió, por qué importa, quién se beneficia y cómo esa acción mejora la vida cotidiana.',
+      'Por eso, la comunicación de gobierno necesita ritmo. No se trata de publicar más, sino de construir una secuencia narrativa que combine avances, contexto, evidencia y tono humano.',
+      'Una buena estrategia también evita el triunfalismo. Explicar dificultades, mostrar proceso y sostener consistencia entre anuncio y ejecución fortalece la credibilidad mucho más que la propaganda vacía.',
+    ],
   },
 ];
 

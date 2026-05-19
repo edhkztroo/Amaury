@@ -2,6 +2,33 @@ import React from 'react';
 import { ArrowLeft, ArrowUpRight, Newspaper } from 'lucide-react';
 import { Reveal } from '../UI/Reveal';
 import { ARTICLES, SectionId } from '../../constants';
+import { Article } from '../../types';
+
+const ArticleCover: React.FC<{ article: Article; compact?: boolean }> = ({ article, compact = false }) => {
+  const sizeClasses = compact ? 'aspect-[16/9] rounded-[1.25rem] mb-6' : 'aspect-[16/10] rounded-[1.5rem] mb-8';
+
+  if (article.coverImage) {
+    return (
+      <div className={`overflow-hidden bg-white/10 ${sizeClasses}`}>
+        <img
+          src={article.coverImage}
+          alt={article.title}
+          className="h-full w-full object-cover"
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className={`overflow-hidden border border-dashed ${compact ? 'border-brand-navy/15' : 'border-white/15'} bg-gradient-to-br ${compact ? 'from-brand-navy/5 to-brand-red/10' : 'from-white/10 to-brand-red/20'} ${sizeClasses}`}>
+      <div className="flex h-full items-end p-6">
+        <span className={`text-xs font-bold uppercase tracking-[0.3em] ${compact ? 'text-brand-navy/45' : 'text-white/55'}`}>
+          Espacio para portada
+        </span>
+      </div>
+    </div>
+  );
+};
 
 const Articles: React.FC = () => {
   const featuredArticle = ARTICLES.find((article) => article.featured) ?? ARTICLES[0];
@@ -23,8 +50,8 @@ const Articles: React.FC = () => {
           </a>
         </Reveal>
 
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-10 items-end mb-16">
-          <Reveal className="xl:col-span-7">
+        <div className="mb-16">
+          <Reveal className="max-w-4xl">
             <div className="flex items-center gap-4 mb-6">
               <div className="p-3 bg-brand-navy rounded-full">
                 <Newspaper size={24} className="text-white" />
@@ -40,26 +67,14 @@ const Articles: React.FC = () => {
               Un interno editorial para publicar análisis, opinión y reflexiones sobre estrategia política, campañas, liderazgo y comunicación pública.
             </p>
           </Reveal>
-
-          <Reveal delay={0.1} className="xl:col-span-5">
-            <div className="rounded-[1.75rem] border border-brand-navy/10 bg-white/80 backdrop-blur-sm p-8 shadow-[0_20px_50px_rgba(15,23,42,0.08)]">
-              <p className="text-xs font-bold uppercase tracking-[0.3em] text-brand-red mb-4">
-                Archivo vivo
-              </p>
-              <p className="text-3xl font-serif font-bold text-brand-navy mb-3">
-                {ARTICLES.length} publicaciones
-              </p>
-              <p className="text-gray-600 leading-relaxed">
-                Cada tarjeta puede apuntar luego a su artículo completo. Por ahora este interno funciona como portada editorial del sitio.
-              </p>
-            </div>
-          </Reveal>
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
           {featuredArticle && (
             <Reveal width="100%" className="xl:col-span-7">
               <article className="h-full rounded-[2rem] bg-brand-navy text-white p-8 md:p-10 shadow-[0_30px_80px_rgba(15,23,42,0.18)]">
+                <ArticleCover article={featuredArticle} />
+
                 <div className="flex flex-wrap items-center gap-3 mb-8">
                   <span className="px-4 py-1 text-xs font-bold uppercase tracking-[0.25em] bg-white/10 rounded-full">
                     Destacado
@@ -94,6 +109,8 @@ const Articles: React.FC = () => {
             {secondaryArticles.map((article, index) => (
               <Reveal key={article.id} delay={0.15 + index * 0.08} width="100%">
                 <article className="rounded-[1.75rem] border border-gray-200 bg-white/90 backdrop-blur-sm p-7 h-full hover:border-brand-red/40 hover:shadow-xl transition-all duration-300">
+                  <ArticleCover article={article} compact />
+
                   <div className="flex items-center justify-between gap-4 mb-6">
                     <span className="text-xs font-bold uppercase tracking-[0.25em] text-brand-red">
                       {article.category}
