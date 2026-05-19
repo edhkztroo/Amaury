@@ -123,6 +123,14 @@ const Contact: React.FC = () => {
         <div className="mt-24 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center text-gray-400 text-xs uppercase tracking-[0.2em]">
           <p>&copy; {new Date().getFullYear()} Amaury Mogollón</p>
           <div className="flex gap-8 mt-4 md:mt-0">
+            <a
+              href="https://amaury.sanity.studio/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] font-medium tracking-[0.25em] text-gray-300 hover:text-brand-red transition-colors"
+            >
+              Admin
+            </a>
            
     {/* CÓDIGO ACTUALIZADO: FONDO BLANCO + AZUL */}
       <style>{`
