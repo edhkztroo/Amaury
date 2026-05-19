@@ -73,6 +73,21 @@ const Articles: React.FC<ArticlesProps> = ({ articles }) => {
           </Reveal>
         </div>
 
+        {articles.length === 0 ? (
+          <Reveal width="100%">
+            <div className="rounded-[2rem] border border-brand-navy/10 bg-white/90 p-10 md:p-14 shadow-[0_20px_50px_rgba(15,23,42,0.08)]">
+              <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand-red mb-4">
+                Próximamente
+              </p>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-brand-navy mb-4">
+                Los artículos aparecerán aquí.
+              </h2>
+              <p className="max-w-2xl text-lg text-gray-600 leading-relaxed">
+                Esta sección ya está conectada con Sanity. En cuanto publiques el primer artículo desde el panel editorial, se mostrará automáticamente aquí.
+              </p>
+            </div>
+          </Reveal>
+        ) : (
         <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
           {featuredArticle && (
             <Reveal width="100%" className="xl:col-span-7">
@@ -148,6 +163,7 @@ const Articles: React.FC<ArticlesProps> = ({ articles }) => {
             ))}
           </div>
         </div>
+        )}
       </div>
     </section>
   );

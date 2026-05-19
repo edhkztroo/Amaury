@@ -101,6 +101,7 @@ function App() {
 
     return articles.find((article) => article.slug === slug) ?? null;
   }, [articles, currentHash]);
+  const shouldShowArticleDetail = currentRoute === 'article-detail' && currentArticle;
 
   useEffect(() => {
     if (!currentHash || currentHash.startsWith('#/')) {
@@ -126,7 +127,7 @@ function App() {
   return (
     <main className="w-full overflow-x-hidden">
       <Navbar currentRoute={currentRoute} />
-      {currentRoute === 'article-detail' && currentArticle ? (
+      {shouldShowArticleDetail ? (
         <>
           <ArticleDetail article={currentArticle} />
           <Contact />
