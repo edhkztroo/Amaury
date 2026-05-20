@@ -17,26 +17,26 @@ interface ArticleDetailProps {
 const portableTextComponents = {
   block: {
     normal: ({ children }: { children?: React.ReactNode }) => (
-      <p className="text-lg md:text-xl text-gray-700 leading-relaxed">{children}</p>
+      <p className="text-[1.05rem] md:text-[1.12rem] text-gray-700 leading-8">{children}</p>
     ),
     h2: ({ children }: { children?: React.ReactNode }) => (
-      <h2 className="text-3xl md:text-4xl font-serif font-bold text-brand-navy pt-4">{children}</h2>
+      <h2 className="text-3xl md:text-[2.35rem] font-serif font-bold text-brand-navy pt-6 leading-tight">{children}</h2>
     ),
     h3: ({ children }: { children?: React.ReactNode }) => (
-      <h3 className="text-2xl md:text-3xl font-serif font-bold text-brand-navy pt-2">{children}</h3>
+      <h3 className="text-2xl md:text-[1.9rem] font-serif font-bold text-brand-navy pt-3 leading-tight">{children}</h3>
     ),
     blockquote: ({ children }: { children?: React.ReactNode }) => (
-      <blockquote className="border-l-4 border-brand-red pl-6 italic text-gray-600 text-lg md:text-xl">
+      <blockquote className="border-l-4 border-brand-red pl-6 italic text-gray-600 text-[1.05rem] md:text-[1.12rem] leading-8">
         {children}
       </blockquote>
     ),
   },
   list: {
     bullet: ({ children }: { children?: React.ReactNode }) => (
-      <ul className="list-disc pl-6 text-lg md:text-xl text-gray-700 space-y-3">{children}</ul>
+      <ul className="list-disc pl-6 text-[1.05rem] md:text-[1.12rem] text-gray-700 space-y-3 leading-8">{children}</ul>
     ),
     number: ({ children }: { children?: React.ReactNode }) => (
-      <ol className="list-decimal pl-6 text-lg md:text-xl text-gray-700 space-y-3">{children}</ol>
+      <ol className="list-decimal pl-6 text-[1.05rem] md:text-[1.12rem] text-gray-700 space-y-3 leading-8">{children}</ol>
     ),
   },
   marks: {
@@ -58,7 +58,7 @@ const portableTextComponents = {
       }
 
       return (
-        <figure className="my-10 overflow-hidden">
+        <figure className="my-10 md:my-12 overflow-hidden">
           <img
             src={imageBuilder.image(value).width(1400).fit('max').auto('format').url()}
             alt={value.alt || value.caption || ''}
@@ -86,6 +86,7 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article }) => {
   return (
     <section className="min-h-screen pt-36 pb-24 md:pt-44 md:pb-32 bg-white relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(170,28,45,0.08),_transparent_28%),linear-gradient(180deg,_#ffffff_0%,_#f7f7f7_100%)]"></div>
+      <div className="absolute right-0 top-24 h-64 w-64 rounded-full bg-brand-red/5 blur-3xl"></div>
 
       <div className="container mx-auto px-6 relative z-10">
         <Reveal>
@@ -98,53 +99,89 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article }) => {
           </a>
         </Reveal>
 
-        <div className="max-w-5xl mx-auto">
-          {article.coverImage && (
-            <Reveal width="100%">
-              <div className="aspect-[16/8] overflow-hidden rounded-[2rem] mb-10 shadow-[0_30px_80px_rgba(15,23,42,0.14)]">
-                <img src={article.coverImage} alt={article.title} className="h-full w-full object-cover" />
-              </div>
-            </Reveal>
-          )}
-
+        <div className="max-w-6xl mx-auto">
           <Reveal>
-            <div className="flex flex-wrap items-center gap-4 mb-6">
-              <span className="text-xs font-bold uppercase tracking-[0.3em] text-brand-red">
+            <div className="flex flex-wrap items-center gap-4 mb-5">
+              <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-red">
                 {article.category}
               </span>
-              <span className="text-sm text-gray-400">{article.date}</span>
-              <span className="inline-flex items-center gap-2 text-sm text-gray-500">
-                <Clock3 size={16} />
-                {article.readTime}
-              </span>
+              <span className="text-sm text-gray-400">Inicio / Artículos / {article.category}</span>
             </div>
           </Reveal>
 
-          <Reveal delay={0.05}>
-            <h1 className="text-4xl md:text-6xl font-serif font-bold text-brand-navy leading-tight mb-6">
-              {article.title}
-            </h1>
-          </Reveal>
+          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_280px] gap-14 items-start">
+            <div>
+              <Reveal delay={0.03}>
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-3 mb-6 border-y border-gray-200 py-4 text-sm text-gray-500">
+                  <span className="font-medium text-brand-navy">Por Amaury Mogollón</span>
+                  <span>{article.date}</span>
+                  <span className="inline-flex items-center gap-2">
+                    <Clock3 size={16} />
+                    {article.readTime}
+                  </span>
+                </div>
+              </Reveal>
 
-          <Reveal delay={0.1}>
-            <p className="text-xl text-gray-600 leading-relaxed mb-12">
-              {article.excerpt}
-            </p>
-          </Reveal>
+              <Reveal delay={0.05}>
+                <h1 className="max-w-4xl text-4xl md:text-6xl xl:text-[4.1rem] font-serif font-bold text-brand-navy leading-[0.95] mb-5">
+                  {article.title}
+                </h1>
+              </Reveal>
 
-          <Reveal delay={0.12} width="100%">
-            <div className="max-w-3xl space-y-8">
-              {hasPortableTextContent ? (
-                <PortableText value={article.content as Array<Record<string, unknown>>} components={portableTextComponents} />
-              ) : (
-                (article.content as string[] | undefined)?.map((paragraph, index) => (
-                  <p key={`${article.id}-${index}`} className="text-lg md:text-xl text-gray-700 leading-relaxed">
-                    {paragraph}
-                  </p>
-                ))
+              <Reveal delay={0.08}>
+                <p className="max-w-3xl text-xl md:text-[1.7rem] font-serif text-gray-500 leading-snug mb-10">
+                  {article.excerpt}
+                </p>
+              </Reveal>
+
+              {article.coverImage && (
+                <Reveal delay={0.1} width="100%">
+                  <div className="aspect-[16/8.5] overflow-hidden rounded-[1.75rem] mb-12 shadow-[0_28px_70px_rgba(15,23,42,0.12)]">
+                    <img src={article.coverImage} alt={article.title} className="h-full w-full object-cover" />
+                  </div>
+                </Reveal>
               )}
+
+              <Reveal delay={0.12} width="100%">
+                <div className="max-w-3xl space-y-8">
+                  {hasPortableTextContent ? (
+                    <PortableText value={article.content as Array<Record<string, unknown>>} components={portableTextComponents} />
+                  ) : (
+                    (article.content as string[] | undefined)?.map((paragraph, index) => (
+                      <p key={`${article.id}-${index}`} className="text-[1.05rem] md:text-[1.12rem] text-gray-700 leading-8">
+                        {paragraph}
+                      </p>
+                    ))
+                  )}
+                </div>
+              </Reveal>
             </div>
-          </Reveal>
+
+            <Reveal delay={0.15} width="100%" className="hidden xl:block">
+              <aside className="sticky top-36 rounded-[1.5rem] border border-gray-200 bg-white/95 p-7 shadow-[0_20px_40px_rgba(15,23,42,0.06)]">
+                <p className="text-xs font-bold uppercase tracking-[0.28em] text-brand-red mb-4">
+                  Ficha
+                </p>
+                <h2 className="text-2xl font-serif font-bold text-brand-navy leading-tight mb-4">
+                  Datos del artículo
+                </h2>
+                <dl className="space-y-4 text-sm leading-7 text-gray-600">
+                  <div>
+                    <dt className="font-bold uppercase tracking-[0.18em] text-brand-navy/70">Categoría</dt>
+                    <dd>{article.category}</dd>
+                  </div>
+                  <div>
+                    <dt className="font-bold uppercase tracking-[0.18em] text-brand-navy/70">Fecha</dt>
+                    <dd>{article.date}</dd>
+                  </div>
+                  <div>
+                    <dt className="font-bold uppercase tracking-[0.18em] text-brand-navy/70">Lectura</dt>
+                    <dd>{article.readTime}</dd>
+                  </div>
+                </dl>
+              </aside>
+            </Reveal>
+          </div>
         </div>
       </div>
     </section>
