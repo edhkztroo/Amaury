@@ -136,7 +136,7 @@ function App() {
       <Navbar currentRoute={currentRoute} />
       {shouldShowArticleDetail ? (
         <>
-          <ArticleDetail article={currentArticle} />
+          <ArticleDetail article={currentArticle} articles={articles} />
           <Contact />
         </>
       ) : currentRoute === 'articles' ? (

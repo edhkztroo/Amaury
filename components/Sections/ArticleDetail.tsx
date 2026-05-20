@@ -12,6 +12,7 @@ const imageBuilder = imageUrlBuilder({ projectId, dataset });
 
 interface ArticleDetailProps {
   article: Article;
+  articles?: Article[];
 }
 
 const portableTextComponents = {
@@ -75,13 +76,16 @@ const portableTextComponents = {
   },
 };
 
-const ArticleDetail: React.FC<ArticleDetailProps> = ({ article }) => {
+const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, articles = [] }) => {
   const hasPortableTextContent =
     Array.isArray(article.content) &&
     article.content.length > 0 &&
     typeof article.content[0] === 'object' &&
     article.content[0] !== null &&
     '_type' in article.content[0];
+  const suggestedArticles = articles
+    .filter((item) => item.id !== article.id)
+    .slice(0, 4);
 
   return (
     <section className="min-h-screen pt-36 pb-24 md:pt-44 md:pb-32 bg-white relative overflow-hidden">
@@ -100,28 +104,8 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article }) => {
         </Reveal>
 
         <div className="max-w-6xl mx-auto">
-          <Reveal>
-            <div className="flex flex-wrap items-center gap-4 mb-5">
-              <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-red">
-                {article.category}
-              </span>
-              <span className="text-sm text-gray-400">Inicio / Artículos / {article.category}</span>
-            </div>
-          </Reveal>
-
           <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_280px] gap-14 items-start">
             <div>
-              <Reveal delay={0.03}>
-                <div className="flex flex-wrap items-center gap-x-5 gap-y-3 mb-6 border-y border-gray-200 py-4 text-sm text-gray-500">
-                  <span className="font-medium text-brand-navy">Por Amaury Mogollón</span>
-                  <span>{article.date}</span>
-                  <span className="inline-flex items-center gap-2">
-                    <Clock3 size={16} />
-                    {article.readTime}
-                  </span>
-                </div>
-              </Reveal>
-
               <Reveal delay={0.05}>
                 <h1 className="max-w-4xl text-4xl md:text-6xl xl:text-[4.1rem] font-serif font-bold text-brand-navy leading-[0.95] mb-5">
                   {article.title}
@@ -134,15 +118,35 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article }) => {
                 </p>
               </Reveal>
 
+              <Reveal delay={0.1}>
+                <div className="mb-10">
+                  <div className="flex flex-wrap items-center gap-4 mb-4">
+                    <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-red">
+                      {article.category}
+                    </span>
+                    <span className="text-sm text-gray-400">Inicio / Artículos / {article.category}</span>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-x-5 gap-y-3 border-y border-gray-200 py-4 text-sm text-gray-500">
+                    <span className="font-medium text-brand-navy">Por Amaury Mogollón</span>
+                    <span>{article.date}</span>
+                    <span className="inline-flex items-center gap-2">
+                      <Clock3 size={16} />
+                      {article.readTime}
+                    </span>
+                  </div>
+                </div>
+              </Reveal>
+
               {article.coverImage && (
-                <Reveal delay={0.1} width="100%">
+                <Reveal delay={0.12} width="100%">
                   <div className="aspect-[16/8.5] overflow-hidden rounded-[1.75rem] mb-12 shadow-[0_28px_70px_rgba(15,23,42,0.12)]">
                     <img src={article.coverImage} alt={article.title} className="h-full w-full object-cover" />
                   </div>
                 </Reveal>
               )}
 
-              <Reveal delay={0.12} width="100%">
+              <Reveal delay={0.14} width="100%">
                 <div className="max-w-3xl space-y-8">
                   {hasPortableTextContent ? (
                     <PortableText value={article.content as Array<Record<string, unknown>>} components={portableTextComponents} />
@@ -160,25 +164,41 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article }) => {
             <Reveal delay={0.15} width="100%" className="hidden xl:block">
               <aside className="sticky top-36 rounded-[1.5rem] border border-gray-200 bg-white/95 p-7 shadow-[0_20px_40px_rgba(15,23,42,0.06)]">
                 <p className="text-xs font-bold uppercase tracking-[0.28em] text-brand-red mb-4">
-                  Ficha
+                  Sugerencias
                 </p>
                 <h2 className="text-2xl font-serif font-bold text-brand-navy leading-tight mb-4">
-                  Datos del artículo
+                  Otros artículos
                 </h2>
-                <dl className="space-y-4 text-sm leading-7 text-gray-600">
-                  <div>
-                    <dt className="font-bold uppercase tracking-[0.18em] text-brand-navy/70">Categoría</dt>
-                    <dd>{article.category}</dd>
+                {suggestedArticles.length > 0 ? (
+                  <div className="space-y-5">
+                    {suggestedArticles.map((suggestedArticle, index) => (
+                      <article
+                        key={suggestedArticle.id}
+                        className={`pb-5 ${index !== suggestedArticles.length - 1 ? 'border-b border-gray-200' : ''}`}
+                      >
+                        <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-red">
+                          {suggestedArticle.category}
+                        </p>
+                        <h3 className="text-lg font-serif font-bold leading-snug text-brand-navy">
+                          <a
+                            href={suggestedArticle.href ?? '#'}
+                            className="transition-colors hover:text-brand-red"
+                          >
+                            {suggestedArticle.title}
+                          </a>
+                        </h3>
+                        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-400">
+                          <span>{suggestedArticle.date}</span>
+                          <span>{suggestedArticle.readTime}</span>
+                        </div>
+                      </article>
+                    ))}
                   </div>
-                  <div>
-                    <dt className="font-bold uppercase tracking-[0.18em] text-brand-navy/70">Fecha</dt>
-                    <dd>{article.date}</dd>
-                  </div>
-                  <div>
-                    <dt className="font-bold uppercase tracking-[0.18em] text-brand-navy/70">Lectura</dt>
-                    <dd>{article.readTime}</dd>
-                  </div>
-                </dl>
+                ) : (
+                  <p className="text-sm leading-7 text-gray-600">
+                    A medida que se publiquen nuevos artículos, aparecerán aquí como lecturas relacionadas.
+                  </p>
+                )}
               </aside>
             </Reveal>
           </div>
