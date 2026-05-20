@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowLeft, ArrowUpRight, Newspaper } from 'lucide-react';
 import { Reveal } from '../UI/Reveal';
-import { SectionId } from '../../constants';
+import { HOME_ROUTE, SectionId } from '../../constants';
 import { Article } from '../../types';
 
 const ArticleCover: React.FC<{ article: Article; compact?: boolean }> = ({ article, compact = false }) => {
@@ -46,7 +46,7 @@ const Articles: React.FC<ArticlesProps> = ({ articles }) => {
       <div className="container mx-auto px-6 relative z-10">
         <Reveal>
           <a
-            href={`#${SectionId.HERO}`}
+            href={HOME_ROUTE}
             className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.25em] text-brand-navy/60 hover:text-brand-red transition-colors mb-8"
           >
             <ArrowLeft size={16} />

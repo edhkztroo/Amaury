@@ -2,8 +2,9 @@ import { Article, Award, Book, SectionId } from './types';
 
 export { SectionId };
 
-export const ARTICLES_ROUTE = '#/articulos';
-export const getArticleRoute = (slug: string) => `#/articulos/${slug}`;
+export const HOME_ROUTE = '/';
+export const ARTICLES_ROUTE = '/articulos';
+export const getArticleRoute = (slug: string) => `/articulos/${slug}`;
 
 export const BRAND_NAME = "AMAURY MOGOLLÓN";
 export const BRAND_ROLE = "Consultor Político";

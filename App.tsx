@@ -13,26 +13,29 @@ import { ARTICLES } from './constants';
 import { fetchSanityArticles, hasSanityConfig } from './lib/sanity';
 import { AppRoute, Article, SectionId } from './types';
 
-const getHash = () => window.location.hash;
+const getLocationState = () => ({
+  pathname: window.location.pathname,
+  hash: window.location.hash,
+});
 
-const getRouteFromHash = (hash: string): AppRoute => {
-  if (hash.startsWith('#/articulos/')) {
+const getRouteFromPathname = (pathname: string): AppRoute => {
+  if (pathname.startsWith('/articulos/')) {
     return 'article-detail';
   }
 
-  if (hash.startsWith('#/articulos')) {
+  if (pathname === '/articulos') {
     return 'articles';
   }
 
   return 'home';
 };
 
-const getArticleSlugFromHash = (hash: string) => {
-  if (!hash.startsWith('#/articulos/')) {
+const getArticleSlugFromPathname = (pathname: string) => {
+  if (!pathname.startsWith('/articulos/')) {
     return null;
   }
 
-  return hash.replace('#/articulos/', '').trim() || null;
+  return pathname.replace('/articulos/', '').trim() || null;
 };
 
 const scrollToSection = (sectionId: string) => {
@@ -55,18 +58,22 @@ const scrollToSection = (sectionId: string) => {
 };
 
 function App() {
-  const [currentHash, setCurrentHash] = useState(getHash);
+  const [locationState, setLocationState] = useState(getLocationState);
   const [articles, setArticles] = useState<Article[]>(ARTICLES);
 
   useEffect(() => {
-    const handleHashChange = () => {
-      setCurrentHash(getHash());
+    const updateLocationState = () => {
+      setLocationState(getLocationState());
     };
 
-    window.addEventListener('hashchange', handleHashChange);
-    handleHashChange();
+    window.addEventListener('popstate', updateLocationState);
+    window.addEventListener('hashchange', updateLocationState);
+    updateLocationState();
 
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    return () => {
+      window.removeEventListener('popstate', updateLocationState);
+      window.removeEventListener('hashchange', updateLocationState);
+    };
   }, []);
 
   useEffect(() => {
@@ -91,25 +98,25 @@ function App() {
     };
   }, []);
 
-  const currentRoute = useMemo(() => getRouteFromHash(currentHash), [currentHash]);
+  const currentRoute = useMemo(() => getRouteFromPathname(locationState.pathname), [locationState.pathname]);
   const currentArticle = useMemo(() => {
-    const slug = getArticleSlugFromHash(currentHash);
+    const slug = getArticleSlugFromPathname(locationState.pathname);
 
     if (!slug) {
       return null;
     }
 
     return articles.find((article) => article.slug === slug) ?? null;
-  }, [articles, currentHash]);
+  }, [articles, locationState.pathname]);
   const shouldShowArticleDetail = currentRoute === 'article-detail' && currentArticle;
 
   useEffect(() => {
-    if (!currentHash || currentHash.startsWith('#/')) {
+    if (currentRoute !== 'home' || !locationState.hash) {
       window.scrollTo({ top: 0, behavior: 'auto' });
       return;
     }
 
-    const targetId = currentHash.replace('#', '');
+    const targetId = locationState.hash.replace('#', '');
     let attempts = 0;
 
     const tryScroll = () => {
@@ -122,7 +129,7 @@ function App() {
     };
 
     window.requestAnimationFrame(tryScroll);
-  }, [currentHash, currentRoute]);
+  }, [locationState.hash, currentRoute]);
 
   return (
     <main className="w-full overflow-x-hidden">

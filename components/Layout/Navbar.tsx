@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import { ARTICLES_ROUTE, NAV_ITEMS, SectionId } from '../../constants';
+import { ARTICLES_ROUTE, HOME_ROUTE, NAV_ITEMS, SectionId } from '../../constants';
 import { AppRoute } from '../../types';
 
 interface NavbarProps {
@@ -44,8 +44,9 @@ const Navbar: React.FC<NavbarProps> = ({ currentRoute }) => {
     e.preventDefault();
     setMobileMenuOpen(false);
 
-    if (href.startsWith('#/')) {
-      window.location.hash = href;
+    if (href.startsWith('/articulos')) {
+      window.history.pushState(null, '', href);
+      window.dispatchEvent(new PopStateEvent('popstate'));
       window.scrollTo({ top: 0, behavior: 'auto' });
       return;
     }
@@ -53,13 +54,14 @@ const Navbar: React.FC<NavbarProps> = ({ currentRoute }) => {
     const targetId = href.replace('#', '');
 
     if (currentRoute === 'home' && smoothScrollToSection(targetId)) {
-      if (window.location.hash !== href) {
-        window.history.replaceState(null, '', href);
+      if (window.location.hash !== href || window.location.pathname !== HOME_ROUTE) {
+        window.history.replaceState(null, '', `${HOME_ROUTE}${href}`);
       }
       return;
     }
 
-    window.location.hash = href;
+    window.history.pushState(null, '', `${HOME_ROUTE}${href}`);
+    window.dispatchEvent(new PopStateEvent('popstate'));
   };
 
   return (
@@ -74,7 +76,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentRoute }) => {
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
         <a 
-          href={`#${SectionId.HERO}`} 
+          href={HOME_ROUTE}
           onClick={(e) => handleNavigation(e, `#${SectionId.HERO}`)}
           className="block transition-opacity hover:opacity-80"
         >
