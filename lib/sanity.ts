@@ -22,7 +22,8 @@ const articlesQuery = groq`*[_type == "article"] | order(featured desc, publishe
   title,
   "slug": slug.current,
   category,
-  "date": publishedAt,
+  publishedAt,
+  "updatedAt": _updatedAt,
   readTime,
   excerpt,
   "coverImage": coverImage.asset->url,
@@ -55,7 +56,8 @@ export const fetchSanityArticles = async (): Promise<Article[]> => {
       slug: string;
       title: string;
       category: string;
-      date?: string;
+      publishedAt?: string;
+      updatedAt?: string;
       readTime: string;
       excerpt: string;
       coverImage?: string;
@@ -69,7 +71,9 @@ export const fetchSanityArticles = async (): Promise<Article[]> => {
     slug: article.slug,
     title: article.title,
     category: article.category,
-    date: formatDate(article.date),
+    date: formatDate(article.publishedAt),
+    publishedAt: article.publishedAt,
+    updatedAt: article.updatedAt,
     readTime: article.readTime,
     excerpt: article.excerpt,
     coverImage: article.coverImage,

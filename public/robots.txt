@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://amaurymogollon.com/sitemap.xml
+Sitemap: https://amaurymogollon.com/news-sitemap.xml

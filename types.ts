@@ -21,6 +21,8 @@ export interface Article {
   title: string;
   category: string;
   date: string;
+  publishedAt?: string;
+  updatedAt?: string;
   excerpt: string;
   readTime: string;
   coverImage?: string;

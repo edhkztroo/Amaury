@@ -5,9 +5,27 @@ export { SectionId };
 export const HOME_ROUTE = '/';
 export const ARTICLES_ROUTE = '/articulos';
 export const getArticleRoute = (slug: string) => `/articulos/${slug}`;
+export const SITE_URL = 'https://amaurymogollon.com';
 
 export const BRAND_NAME = "AMAURY MOGOLLÓN";
 export const BRAND_ROLE = "Consultor Político";
+export const SITE_DESCRIPTION = 'Sitio oficial de Amaury Mogollón, consultor político en Latinoamérica. Estrategia política, campañas electorales, comunicación pública y consultoría para gobiernos, candidatos y partidos.';
+export const SITE_KEYWORDS = [
+  'Amaury Mogollón',
+  'Amaury',
+  'consultor político',
+  'consultor político LATAM',
+  'consultor político Latinoamérica',
+  'consultor político México',
+  'consultor político Colombia',
+  'consultor político Venezuela',
+  'consultoría política',
+  'consultoría política Latinoamérica',
+  'estrategia política',
+  'campañas electorales',
+  'comunicación política',
+  'consultoría de gobiernos',
+];
 
 export const SOCIAL_LINKS = {
   twitter: "@amaury_mogollon",

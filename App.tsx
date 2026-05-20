@@ -11,6 +11,7 @@ import Film from './components/Sections/Film';
 import Contact from './components/Sections/Contact';
 import { ARTICLES } from './constants';
 import { fetchSanityArticles, hasSanityConfig } from './lib/sanity';
+import { applySeo } from './lib/seo';
 import { AppRoute, Article, SectionId } from './types';
 
 const getLocationState = () => ({
@@ -109,6 +110,14 @@ function App() {
     return articles.find((article) => article.slug === slug) ?? null;
   }, [articles, locationState.pathname]);
   const shouldShowArticleDetail = currentRoute === 'article-detail' && currentArticle;
+
+  useEffect(() => {
+    applySeo({
+      route: currentRoute,
+      articles,
+      article: currentArticle,
+    });
+  }, [articles, currentArticle, currentRoute]);
 
   useEffect(() => {
     if (currentRoute !== 'home' || !locationState.hash) {
