@@ -131,52 +131,6 @@ const Contact: React.FC = () => {
             >
               Admin
             </a>
-           
-    {/* CÓDIGO ACTUALIZADO: FONDO BLANCO + AZUL */}
-      <style>{`
-        .vibe-credit {
-          text-decoration: none;
-          color: #000000; /* AHORA ES NEGRO */
-          font-size: 12px;
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          font-family: sans-serif; /* Fuente normal y limpia */
-          transition: color 0.3s ease;
-          cursor: pointer;
-        }
-
-        .vibe-credit:hover {
-          color: #6831fc; /* AHORA ES AZUL ELÉCTRICO AL PASAR EL MOUSE */
-        }
-
-        .vibe-normal {
-          font-weight: 500; /* Peso normal */
-        }
-
-        .vibe-star {
-          font-size: 16px;
-          display: inline-block;
-          transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .vibe-credit:hover .vibe-star {
-          transform: rotate(180deg);
-        }
-
-        .vibe-brand {
-          font-weight: 900; /* Negrita muy gruesa */
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
-        }
-      `}</style>
-
-      <a href="https://www.thatvibe.co/" target="_blank" rel="noopener noreferrer" className="vibe-credit">
-        <span className="vibe-normal">Look & Feel</span>
-        <span className="vibe-star">✦</span>
-        <span className="vibe-brand">THAT VIBE STUDIO</span>
-      </a>
-      {/* FIN DEL CÓDIGO */}
           </div>
         </div>
 

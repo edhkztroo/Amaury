@@ -194,11 +194,7 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, articles = [] })
                       </article>
                     ))}
                   </div>
-                ) : (
-                  <p className="text-sm leading-7 text-gray-600">
-                    A medida que se publiquen nuevos artículos, aparecerán aquí como lecturas relacionadas.
-                  </p>
-                )}
+                ) : null}
               </aside>
             </Reveal>
           </div>
