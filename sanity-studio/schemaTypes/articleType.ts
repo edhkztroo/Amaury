@@ -64,9 +64,63 @@ export const articleType = defineType({
     defineField({
       name: 'content',
       title: 'Contenido',
-      type: 'text',
-      rows: 18,
-      description: 'Separa párrafos dejando una línea en blanco entre ellos.',
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Párrafo', value: 'normal' },
+            { title: 'Título intermedio', value: 'h2' },
+            { title: 'Subtítulo', value: 'h3' },
+            { title: 'Cita', value: 'blockquote' },
+          ],
+          lists: [
+            { title: 'Viñetas', value: 'bullet' },
+            { title: 'Numerada', value: 'number' },
+          ],
+          marks: {
+            decorators: [
+              { title: 'Negrita', value: 'strong' },
+              { title: 'Cursiva', value: 'em' },
+              { title: 'Subrayado', value: 'underline' },
+            ],
+            annotations: [
+              {
+                name: 'link',
+                title: 'Enlace',
+                type: 'object',
+                fields: [
+                  defineField({
+                    name: 'href',
+                    title: 'URL',
+                    type: 'url',
+                  }),
+                ],
+              },
+            ],
+          },
+        },
+        {
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+          fields: [
+            defineField({
+              name: 'alt',
+              title: 'Texto alternativo',
+              type: 'string',
+              description: 'Describe brevemente la imagen.',
+            }),
+            defineField({
+              name: 'caption',
+              title: 'Pie de foto',
+              type: 'string',
+            }),
+          ],
+        },
+      ],
+      description: 'Aquí ya puedes usar negritas, cursivas, listas, subtítulos, enlaces e insertar imágenes dentro del artículo.',
       validation: (rule) => rule.required(),
     }),
   ],
@@ -85,4 +139,3 @@ export const articleType = defineType({
     },
   },
 });
-

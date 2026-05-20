@@ -26,7 +26,7 @@ export interface Article {
   coverImage?: string;
   href?: string;
   featured?: boolean;
-  content?: string[];
+  content?: Array<Record<string, unknown>> | string[];
 }
 
 export interface NavItem {

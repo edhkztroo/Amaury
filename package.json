@@ -11,7 +11,9 @@
     "cms:build": "npm run build --prefix sanity-studio"
   },
   "dependencies": {
+    "@portabletext/react": "^6.2.0",
     "@sanity/client": "^7.22.0",
+    "@sanity/image-url": "^2.1.1",
     "groq": "^5.25.1",
     "lucide-react": "^0.554.0",
     "react": "^19.2.0",

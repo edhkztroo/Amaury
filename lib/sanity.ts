@@ -6,7 +6,7 @@ import { getArticleRoute } from '../constants';
 const projectId = import.meta.env.VITE_SANITY_PROJECT_ID || 'jimcmq0x';
 const dataset = import.meta.env.VITE_SANITY_DATASET || 'production';
 const apiVersion = import.meta.env.VITE_SANITY_API_VERSION || '2026-05-18';
-const useCdn = (import.meta.env.VITE_SANITY_USE_CDN || 'true') === 'true';
+const useCdn = (import.meta.env.VITE_SANITY_USE_CDN || 'false') === 'true';
 
 export const hasSanityConfig = Boolean(projectId && dataset);
 
@@ -48,12 +48,6 @@ const formatDate = (value?: string) => {
   }).format(date);
 };
 
-const splitContent = (value?: string) =>
-  value
-    ?.split(/\n\s*\n/)
-    .map((paragraph) => paragraph.trim())
-    .filter(Boolean) ?? [];
-
 export const fetchSanityArticles = async (): Promise<Article[]> => {
   const articles = await sanityClient.fetch<
     Array<{
@@ -66,7 +60,7 @@ export const fetchSanityArticles = async (): Promise<Article[]> => {
       excerpt: string;
       coverImage?: string;
       featured?: boolean;
-      content?: string;
+      content?: Array<Record<string, unknown>>;
     }>
   >(articlesQuery);
 
@@ -81,7 +75,6 @@ export const fetchSanityArticles = async (): Promise<Article[]> => {
     coverImage: article.coverImage,
     featured: article.featured,
     href: getArticleRoute(article.slug),
-    content: splitContent(article.content),
+    content: article.content ?? [],
   }));
 };
-

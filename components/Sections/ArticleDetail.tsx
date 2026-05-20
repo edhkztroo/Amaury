@@ -1,14 +1,88 @@
 import React from 'react';
+import { PortableText } from '@portabletext/react';
 import { ArrowLeft, Clock3 } from 'lucide-react';
+import imageUrlBuilder from '@sanity/image-url';
 import { Reveal } from '../UI/Reveal';
 import { ARTICLES_ROUTE } from '../../constants';
 import { Article } from '../../types';
+
+const projectId = import.meta.env.VITE_SANITY_PROJECT_ID || 'jimcmq0x';
+const dataset = import.meta.env.VITE_SANITY_DATASET || 'production';
+const imageBuilder = imageUrlBuilder({ projectId, dataset });
 
 interface ArticleDetailProps {
   article: Article;
 }
 
+const portableTextComponents = {
+  block: {
+    normal: ({ children }: { children?: React.ReactNode }) => (
+      <p className="text-lg md:text-xl text-gray-700 leading-relaxed">{children}</p>
+    ),
+    h2: ({ children }: { children?: React.ReactNode }) => (
+      <h2 className="text-3xl md:text-4xl font-serif font-bold text-brand-navy pt-4">{children}</h2>
+    ),
+    h3: ({ children }: { children?: React.ReactNode }) => (
+      <h3 className="text-2xl md:text-3xl font-serif font-bold text-brand-navy pt-2">{children}</h3>
+    ),
+    blockquote: ({ children }: { children?: React.ReactNode }) => (
+      <blockquote className="border-l-4 border-brand-red pl-6 italic text-gray-600 text-lg md:text-xl">
+        {children}
+      </blockquote>
+    ),
+  },
+  list: {
+    bullet: ({ children }: { children?: React.ReactNode }) => (
+      <ul className="list-disc pl-6 text-lg md:text-xl text-gray-700 space-y-3">{children}</ul>
+    ),
+    number: ({ children }: { children?: React.ReactNode }) => (
+      <ol className="list-decimal pl-6 text-lg md:text-xl text-gray-700 space-y-3">{children}</ol>
+    ),
+  },
+  marks: {
+    link: ({ children, value }: { children?: React.ReactNode; value?: { href?: string } }) => (
+      <a
+        href={value?.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-brand-red underline underline-offset-4 hover:text-brand-navy transition-colors"
+      >
+        {children}
+      </a>
+    ),
+  },
+  types: {
+    image: ({ value }: { value?: { asset?: { _ref?: string }; alt?: string; caption?: string } }) => {
+      if (!value?.asset?._ref) {
+        return null;
+      }
+
+      return (
+        <figure className="my-10 overflow-hidden">
+          <img
+            src={imageBuilder.image(value).width(1400).fit('max').auto('format').url()}
+            alt={value.alt || value.caption || ''}
+            className="w-full rounded-[1.5rem] object-cover shadow-[0_24px_60px_rgba(15,23,42,0.12)]"
+          />
+          {value.caption && (
+            <figcaption className="mt-4 text-sm text-gray-500 text-center">
+              {value.caption}
+            </figcaption>
+          )}
+        </figure>
+      );
+    },
+  },
+};
+
 const ArticleDetail: React.FC<ArticleDetailProps> = ({ article }) => {
+  const hasPortableTextContent =
+    Array.isArray(article.content) &&
+    article.content.length > 0 &&
+    typeof article.content[0] === 'object' &&
+    article.content[0] !== null &&
+    '_type' in article.content[0];
+
   return (
     <section className="min-h-screen pt-36 pb-24 md:pt-44 md:pb-32 bg-white relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(170,28,45,0.08),_transparent_28%),linear-gradient(180deg,_#ffffff_0%,_#f7f7f7_100%)]"></div>
@@ -58,15 +132,19 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article }) => {
             </p>
           </Reveal>
 
-          <div className="max-w-3xl space-y-8">
-            {(article.content ?? []).map((paragraph, index) => (
-              <Reveal key={`${article.id}-${index}`} delay={0.12 + index * 0.05}>
-                <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-                  {paragraph}
-                </p>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal delay={0.12} width="100%">
+            <div className="max-w-3xl space-y-8">
+              {hasPortableTextContent ? (
+                <PortableText value={article.content as Array<Record<string, unknown>>} components={portableTextComponents} />
+              ) : (
+                (article.content as string[] | undefined)?.map((paragraph, index) => (
+                  <p key={`${article.id}-${index}`} className="text-lg md:text-xl text-gray-700 leading-relaxed">
+                    {paragraph}
+                  </p>
+                ))
+              )}
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>
