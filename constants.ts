@@ -80,6 +80,13 @@ export const AWARDS: Award[] = [
     title: 'MEJOR JINGLE ELECTORAL',
     year: 'GANADOR',
   },
+  {
+    id: '7',
+    organization: 'REED LATINO',
+    title: 'MEJOR PELÍCULA POLÍTICA LATINOAMÉRICA',
+    subtitle: 'Hijos de la revolución',
+    year: 'GANADOR',
+  },
 ];
 
 export const BOOKS: Book[] = [
@@ -114,7 +121,7 @@ export const TEXT_CONTENT = {
   film: {
     title: "HIJOS DE LA REVOLUCIÓN",
     role: "PRODUCTOR DE CINE",
-    description: "Amaury Mogollón ha emprendido una gira en distintos festivales de Cine de los Estados Unidos, Latinoamérica y Europa, donde su Ópera Prima “Hijos de la Revolución” ha logrado representar a Venezuela. Al mes de agosto de 2024 cuenta con 19 lauros internacionales.\n\nActualmente, el film se encuentra censurado por el gobierno de Nicolás Maduro y no ha podido ser proyectado en los cines de su natal país, Venezuela.",
+    description: "Amaury Mogollón ha emprendido una gira en distintos festivales de Cine de los Estados Unidos, Latinoamérica y Europa, donde su Ópera Prima “Hijos de la Revolución” ha logrado representar a Venezuela. Al mes de agosto de 2024 cuenta con 24 lauros internacionales.\n\nActualmente, el film se encuentra censurado por el gobierno de Nicolás Maduro y no ha podido ser proyectado en los cines de su natal país, Venezuela.",
     cta: "más info"
   }
 };

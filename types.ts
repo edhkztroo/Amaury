@@ -2,6 +2,7 @@ export interface Award {
   id: string;
   organization: string;
   title: string;
+  subtitle?: string;
   year: string;
 }
 

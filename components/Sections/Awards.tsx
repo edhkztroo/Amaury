@@ -132,6 +132,12 @@ const Awards: React.FC = () => {
                                             {award.title}
                                         </h3>
                                       </Reveal>
+
+                                      {award.subtitle && (
+                                        <p className="text-lg md:text-xl font-medium text-amber-100/90 leading-snug">
+                                          {award.subtitle}
+                                        </p>
+                                      )}
                                       
                                       <div className="h-1 mt-4 transition-all duration-500 bg-amber-500/50 w-12 group-hover:w-full"></div>
                                   </div>

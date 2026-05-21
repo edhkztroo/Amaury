@@ -52,7 +52,7 @@ const Film: React.FC = () => {
                  {[1,2,3,4,5].map(i => (
                      <span key={i} className="text-xl">★</span>
                  ))}
-                 <span className="text-gray-400 text-sm ml-2 uppercase tracking-widest">19 Lauros Internacionales</span>
+                 <span className="text-gray-300 text-sm ml-2 uppercase tracking-widest">24 Lauros Internacionales</span>
               </div>
           </Reveal>
 
@@ -79,8 +79,8 @@ const Film: React.FC = () => {
       </div>
 
       {/* Censored Banner Effect */}
-      <div className="absolute bottom-10 right-0 bg-brand-red px-10 py-2 transform -rotate-3 shadow-lg hidden lg:block">
-        <p className="text-white font-bold uppercase tracking-[0.5em] text-sm">Censurado en Venezuela</p>
+      <div className="absolute bottom-10 right-0 bg-brand-red px-12 py-3 transform -rotate-3 shadow-lg hidden lg:block">
+        <p className="text-white font-bold uppercase tracking-[0.38em] text-base xl:text-lg">Censurado en Venezuela</p>
       </div>
     </section>
   );
