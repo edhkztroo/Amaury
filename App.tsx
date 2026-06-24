@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import Navbar from './components/Layout/Navbar';
 import Hero from './components/Sections/Hero';
 import Biography from './components/Sections/Biography';
@@ -164,6 +165,7 @@ function App() {
           <Contact />
         </>
       )}
+      <SpeedInsights />
     </main>
   );
 }
